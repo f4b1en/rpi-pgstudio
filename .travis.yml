@@ -11,3 +11,10 @@ script:
 # build image
 - docker build -t f4b1en/rpi-pgstudio .
 # push image
+- >
+  if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
+    docker tag f4b1en/rpi-pgstudio:latest f4b1en/rpi-pgstudio:2.0
+    docker push f4b1en/rpi-pgstudio:latest
+    docker push f4b1en/rpi-pgstudio:2.0
+  fi
